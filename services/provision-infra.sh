@@ -6,7 +6,7 @@ gcloud init --no-launch-browser
 echo "***********************"
 echo "Logging into GKE"
 echo "***********************"
-gcloud container clusters get-credentials cluster02 --region us-west1 --project gts-multicloud-pe-dev
+gcloud container clusters get-credentials cluster01 --region us-west2 --project gts-multicloud-pe-dmitry
 
 echo "***********************"
 echo "Add Helm Repo"
@@ -30,7 +30,7 @@ echo "Run Helm Charts"
 echo "***********************"
 export NS=infra
 export SERVICE=infra
-export DOMAIN=domain.example.com.
+export DOMAIN=cluster01.gcp.demo.genesys.com.
 #export IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
 
 cd "./services/$SERVICE"

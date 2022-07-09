@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mssql-mssql-linux-data
+  namespace: infra
+  labels:
+    app: mssql-mssql-linux
+    app.kubernetes.io/managed-by: Helm
+    chart: mssql-linux-0.11.4
+    heritage: Helm
+    release: mssql
+  annotations:
+    meta.helm.sh/release-name: mssql
+    meta.helm.sh/release-namespace: infra
+    volume.beta.kubernetes.io/storage-provisioner: pd.csi.storage.gke.io
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Gi
+  storageClassName: repd-us-west1-a-b-c
+  volumeMode: Filesystem
