@@ -2,7 +2,7 @@ module "gke_auth" {
   source = "terraform-google-modules/kubernetes-engine/google//modules/auth"
   project_id    = "gts-multicloud-pe-dev"
   cluster_name  = "cluster02"
-  location      = "us-west1"
+  location      = "us-west2"
 }
 
 resource "local_file" "kubeconfig" {
@@ -11,10 +11,10 @@ resource "local_file" "kubeconfig" {
 }
 
 module "ingress_certs" {
-  source            = "../../../tfm/5-ingress-certs/" #github.com/genesys/multicloud-platform.git//gcp-gke/tfm/4-ingress-certs?ref=master
+  source            = "../../../tfm/5-ingress-certs/"
   project_id        = "gts-multicloud-pe-dev"
   environment       = "gts-multicloud-pe-dev" #same value as in 1-network
-  domain_name_nginx = "nlb02-uswest1.domain.example.com" #domain.example.com should be same as FQDN in module 1-network
+  domain_name_nginx = "nlb02-uswest2.cluster02.gcp.demo.genesys.com" #domain.example.com should be same as FQDN in module 1-network
   email             = "jonathan.mabrito@genesys.com"
 }
 
@@ -24,7 +24,7 @@ data "google_client_config" "provider" {}
 
 data "google_container_cluster" "cluster02" {
   name = "cluster02"
-  location = "us-west1"
+  location = "us-west2"
   project = "gts-multicloud-pe-dev"
 }
 
@@ -72,6 +72,6 @@ terraform {
 terraform {
   backend "gcs" {
     bucket = "gts-multicloud-pe-dev-tf-statefiles" #Replace with the name of the bucket created above
-    prefix = "ingress-certs-cluster02-uswest1-state" #creates a new folder
+    prefix = "ingress-certs-cluster02-uswest2-state" #creates a new folder
   }
 }

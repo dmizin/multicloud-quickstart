@@ -14,11 +14,11 @@ steps:
         echo "*************** TERRAFORM INIT ******************"
         echo "******* At environment: ${env} ********"
         echo "*************************************************"
-        terraform init || exit 1
+        terraform init -reconfigure || exit 1
         cd ../../../../
       done
   timeout: '3600s'
-- id: 'tf apply'
+- id: 'tf delete'
   name: 'hashicorp/terraform:1.0.11'
   entrypoint: 'sh'
   args: 
@@ -33,8 +33,8 @@ steps:
         echo "*************** TERRAFOM PLAN ******************"
         echo "******* At environment: ${env} ********"
         echo "*************************************************"
-        terraform apply -auto-approve || exit 1
+        terraform destroy -auto-approve
         cd ../../../../
       done
   timeout: '3600s'
-timeout: '7200s'
+timeout: '3600s'

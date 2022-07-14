@@ -4,3 +4,4 @@ steps:
   entrypoint: 'bash'
   args: ['services/provision-infra.sh']
   timeout: '3600s'
+timeout: '3600s'

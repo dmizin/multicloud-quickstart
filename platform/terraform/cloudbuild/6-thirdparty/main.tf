@@ -2,7 +2,7 @@ module "gke_auth" {
   source = "terraform-google-modules/kubernetes-engine/google//modules/auth"
   project_id    = "gts-multicloud-pe-dev"
   cluster_name  = "cluster02"
-  location      = "us-west1"
+  location      = "us-west2"
 }
 
 resource "local_file" "kubeconfig" {
@@ -11,14 +11,17 @@ resource "local_file" "kubeconfig" {
 }
 
 module "third-party" {
-    source  = "../../../tfm/6-third-party/" #github.com/genesys/multicloud-platform.git//gcp-gke/tfm/5-third-party?ref=master
+    source  = "../../../tfm/6-third-party/"
+    consul_helm_version = "0.41.0"
+    consul_image        = "hashicorp/consul:1.11.3"
+    consul_imageK8S     = "hashicorp/consul-k8s-control-plane:0.41.0"
 }
 
 data "google_client_config" "provider" {}
 
 data "google_container_cluster" "cluster02" {
   name     = "cluster02"
-  location = "us-west1"
+  location = "us-west2"
   project  = "gts-multicloud-pe-dev"
 }
 
@@ -65,6 +68,6 @@ terraform {
 terraform {
     backend "gcs" {
         bucket = "gts-multicloud-pe-dev-tf-statefiles"
-        prefix = "thirdparty-cluster02-uswest1-state" #creates a new folder
+        prefix = "thirdparty-cluster02-uswest2-state" #creates a new folder
     }
 }

@@ -1,5 +1,5 @@
 module "k8s-setup" {
-    source        = "../../../tfm/4-k8s-setup/" #github.com/genesys/multicloud-platform.git//gcp-gke/tfm/3-k8s-setup?ref=master"
+    source        = "../../../tfm/4-k8s-setup/"
     project_id   = "gts-multicloud-pe-dev"
     network_name = "network01"
     ipv4         = "10.198.12.0/22"
@@ -9,7 +9,7 @@ data "google_client_config" "provider" {}
 
 data "google_container_cluster" "cluster02" {
   name = "cluster02"
-  location = "us-west1"
+  location = "us-west2"
   project = "gts-multicloud-pe-dev"
 }
 
@@ -54,6 +54,6 @@ terraform {
 terraform {
   backend "gcs" {
     bucket = "gts-multicloud-pe-dev-tf-statefiles" 
-    prefix = "k8s-setup-cluster02-uswest1-state" #creates a new folder
+    prefix = "k8s-setup-cluster02-uswest2-state" #creates a new folder
   }
 }
